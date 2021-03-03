@@ -4,6 +4,9 @@ import {Text, Image} from "react-native";
 import {Asset} from "expo-asset";
 import {Ionicons} from "@expo/vector-icons";
 import * as Font from 'expo-font';
+import Gate from "./components/Gate";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 const cacheImages = images => images.map(image => {
 	if (typeof image === "string") {
@@ -30,6 +33,10 @@ export default function App() {
 		const fontPromises = cacheFonts(fonts);
 		return Promise.all([...fontPromises, ...imagePromises])
 	}
-	return isReady ? (<Text>I'M ready</Text>) : (
+	return isReady ? (
+		<Provider store={store}>
+			<Gate/>
+		</Provider>
+	) : (
 		<AppLoading onError={console.error} onFinish={handleFinish} startAsync={loadAssets}/>);
 }
