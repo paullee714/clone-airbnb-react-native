@@ -12,6 +12,8 @@ const Container = styled.View`
 `
 
 const Image = styled.Image`
+  width:100%;
+  height:100%;
   position: absolute;
   z-index: -1;
   top: 0;
@@ -35,7 +37,7 @@ export default ({navigation}) => {
 				<Logo source={{uri: LOGO_URL}}/>
 				<BtnContainer>
 					<Btn onPress={goToSignUp} text={"Sign Up"} accent={true}/>
-					<Btn onPress={goToSignIn} text={"Sign In"} />
+					<Btn onPress={goToSignIn} text={"Sign In"} accent={false}/>
 				</BtnContainer>
 			</BlurView>
 			<Image source={require("../assets/loginBg4.jpg")}/>
