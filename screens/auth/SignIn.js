@@ -5,10 +5,13 @@ import {
 	TouchableWithoutFeedback,
 	Keyboard
 } from "react-native";
+import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
 import Btn from "../../components/Auth/Btn";
 import Input from "../../components/Auth/Input";
 import DismissKeyboard from "../../components/DismissKeyboard";
+import { userLogin } from "../../redux/usersSlice";
+import { isEmail } from "../../utils";
 
 const Container = styled.View`
   flex: 1;
@@ -21,9 +24,29 @@ const InputContainer = styled.View`
 `;
 
 export default ({route:{params}}) => {
-	const [username, setUsername] = useState(params?.email);
+	const dispatch = useDispatch();
+	const [email, setEmail] = useState(params?.email);
 	const [password, setPassword] = useState(params?.password);
-	const handleSubmit = () => alert(`${username}${password}`);
+	const isFormValid = () => {
+		if (email === "" || password === ""){
+			alert("이메일과 패스워드를 모두 입력해야합니다.")
+			return false;
+		}
+		if(!isEmail(email)){
+			alert("이메일을 확인해주세요!")
+			return false
+		}
+		return true
+	}
+	const handleSubmit = () => {
+		if(!isFormValid()){
+			return ;
+		}
+		dispatch(userLogin({
+			username: email,
+			password
+		}))
+	}
 	const dismissKeyboard = () => Keyboard.dismiss();
 
 	return (
@@ -33,10 +56,11 @@ export default ({route:{params}}) => {
 				<KeyboardAvoidingView behavior="position">
 					<InputContainer>
 						<Input
-							value={username}
-							placeholder="Username"
+							value={email}
+							keyboardType="email-address"
+							placeholder="Email"
 							autoCapitalize="none"
-							stateFn={setUsername}
+							stateFn={setEmail}
 						/>
 						<Input
 							value={password}
