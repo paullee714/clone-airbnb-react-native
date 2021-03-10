@@ -8,6 +8,7 @@ import {View, Text, TouchableOpacity} from "react-native";
 import {useDispatch, useSelector} from "react-redux";
 import {logIn, logOut} from "../redux/usersSlice";
 import Auth from "../navigation/Auth";
+import Main from "../navigation/Main"
 import {NavigationContainer} from "@react-navigation/native";
 
 
@@ -18,9 +19,7 @@ export default () => {
 		<NavigationContainer>
 			{isLoggedIn ?
 				(
-					<TouchableOpacity onPress={() => dispatch(logOut())}>
-						<Text>Log Out</Text>
-					</TouchableOpacity>
+					<Main />
 				) :(
 					<Auth/>
 				)
